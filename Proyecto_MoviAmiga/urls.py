@@ -28,6 +28,10 @@ from Portales.views import Puntos_RecargasViewset
 from Portales.views import Rutas_ParaderosViewset
 from Portales.views import Rutas_PuntosRecargasViewset
 from Portales.views import RutasViewset
+from Usuarios.views import Plan_ViajeViewset
+from Usuarios.views import RecargaViewset
+from Usuarios.views import Ruta_FavoritaViewset
+from Usuarios.views import Tarjeta_UsuarioViewset
 
 
 # crear las rutas de cada vista
@@ -43,6 +47,10 @@ router.register('rutas_paraderos', Rutas_ParaderosViewset, 'rutas_paraderos')
 router.register('rutas_puntosrecargas',
                 Rutas_PuntosRecargasViewset, 'rutas_puntosrecargas')
 router.register('rutas', RutasViewset, 'rutas')
+router.register('plan_viaje', Plan_ViajeViewset, 'plan_viaje')
+router.register('recarga', RecargaViewset, 'recarga')
+router.register('ruta_favorita', Ruta_FavoritaViewset, 'ruta_favorita')
+router.register('tarjeta_usuario', Tarjeta_UsuarioViewset, 'tarjeta_usuario')
 
 
 # usar path y poner la ruta para que funcione

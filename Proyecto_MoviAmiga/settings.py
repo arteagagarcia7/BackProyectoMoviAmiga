@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',                      # Para CORS, debe ir primero en apps y middleware
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,12 +43,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'Portales',
+    'Usuarios',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # Debe ir antes de CommonMiddleware
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -63,6 +66,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                # necesario para request en templates
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -77,6 +81,8 @@ WSGI_APPLICATION = 'Proyecto_MoviAmiga.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# Opción SQLite comentada, en uso MySQL:
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -86,12 +92,12 @@ WSGI_APPLICATION = 'Proyecto_MoviAmiga.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',  # Usa el backedn de MySQL
-        'NAME': 'proyecto_moviamiga',  # Nombre de la BD
-        'USER': 'root',  # Usuario de MySQL
-        'PASSWORD': 'D16u06TT66y&',  # Contraseña de MySQL
-        'HOST': 'localhost',  # O la IP de tu servidor de BD
-        'PORT': '3306',  # Puerto por defecto de MySQL
+        'ENGINE': 'django.db.backends.mysql',  # Usa el backend de MySQL
+        'NAME': 'proyecto_moviamiga',          # Nombre de la BD
+        'USER': 'root',                        # Usuario de MySQL
+        'PASSWORD': 'D16u06TT66y&',            # Contraseña de MySQL
+        'HOST': 'localhost',                   # O la IP de tu servidor de BD
+        'PORT': '3306',                        # Puerto por defecto de MySQL
     }
 }
 
@@ -100,18 +106,16 @@ DATABASES = {
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', },
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator', },
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator', },
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator', },
+]
+
+
+# CORS: para permitir conexiones desde el frontend
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # tu frontend con Vite
 ]
 
 
@@ -131,6 +135,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

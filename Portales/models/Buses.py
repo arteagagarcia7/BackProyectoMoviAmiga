@@ -9,6 +9,7 @@ class Buses(models.Model):
     modelo = models.CharField(max_length=150)
     capacidad = models.IntegerField(default=0)
     gps = models.BooleanField(default=False)
+    tipo_transporte = models.CharField(max_length=150)
 
     def __str__(self):
         return self.modelo
