@@ -43,14 +43,16 @@ router.register('programas_rutas', Programas_RutasViewset,
                 'view_programas_rutas')
 router.register('puntos_recarga', Puntos_RecargasViewset,
                 'view_puntos_recarga')
-router.register('rutas_paraderos', Rutas_ParaderosViewset, 'rutas_paraderos')
+router.register('rutas_paraderos', Rutas_ParaderosViewset,
+                'view_rutas_paraderos')
 router.register('rutas_puntosrecargas',
-                Rutas_PuntosRecargasViewset, 'rutas_puntosrecargas')
-router.register('rutas', RutasViewset, 'rutas')
-router.register('plan_viaje', Plan_ViajeViewset, 'plan_viaje')
-router.register('recarga', RecargaViewset, 'recarga')
-router.register('ruta_favorita', Ruta_FavoritaViewset, 'ruta_favorita')
-router.register('tarjeta_usuario', Tarjeta_UsuarioViewset, 'tarjeta_usuario')
+                Rutas_PuntosRecargasViewset, 'viw_rutas_puntosrecargas')
+router.register('rutas', RutasViewset, 'view_rutas')
+router.register('plan_viaje', Plan_ViajeViewset, 'view_plan_viaje')
+router.register('recarga', RecargaViewset, 'view_recarga')
+router.register('ruta_favorita', Ruta_FavoritaViewset, 'view_ruta_favorita')
+router.register('tarjeta_usuario', Tarjeta_UsuarioViewset,
+                'view_tarjeta_usuario')
 
 
 # usar path y poner la ruta para que funcione
