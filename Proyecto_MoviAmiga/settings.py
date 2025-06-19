@@ -9,11 +9,14 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
+import os
 
 from pathlib import Path
-import pymysql
+# import pymysql ya no se usará
 
-pymysql.install_as_MySQLdb()
+import dj_database_url
+
+# pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -34,7 +37,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'corsheaders',                      # Para CORS, debe ir primero en apps y middleware
+    'corsheaders',
+    # Para CORS, debe ir primero en apps y middleware
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -47,9 +51,12 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',  # Debe ir antes de CommonMiddleware
-    'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    # Debe ir antes de CommonMiddleware
     'django.middleware.security.SecurityMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    # Se agrega para archivos estaticos de DRF
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -90,15 +97,23 @@ WSGI_APPLICATION = 'Proyecto_MoviAmiga.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.mysql',  # Usa el backend de MySQL
+#        'NAME': 'proyecto_moviamiga',          # Nombre de la BD
+#        'USER': 'root',                        # Usuario de MySQL
+#        'PASSWORD': 'D16u06TT66y&',            # Contraseña de MySQL
+#        'HOST': 'localhost',                   # O la IP de tu servidor de BD
+#        'PORT': '3306',                        # Puerto por defecto de MySQL
+#    }
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',  # Usa el backend de MySQL
-        'NAME': 'proyecto_moviamiga',          # Nombre de la BD
-        'USER': 'root',                        # Usuario de MySQL
-        'PASSWORD': 'D16u06TT66y&',            # Contraseña de MySQL
-        'HOST': 'localhost',                   # O la IP de tu servidor de BD
-        'PORT': '3306',                        # Puerto por defecto de MySQL
-    }
+    'default': dj_database_url.config(
+        default='sqlite:///db.sqlite3',
+        conn_max_age=600,
+        ssl_require=True
+    )
 }
 
 
@@ -135,6 +150,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 # Default primary key field type
